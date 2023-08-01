@@ -16,8 +16,20 @@ const App = () => {
 
   const [selectedCategory, setSelectedCategory] = useState("");
 
-  const visibleExpenses = selectedCategory
-    ? expenses.filter((e) => e.category === selectedCategory)
+  const visibleExpenses: {
+    id: number;
+    description: string;
+    amount: number;
+    category: string;
+  }[] = selectedCategory
+    ? expenses.filter(
+        (e: {
+          id: number;
+          description: string;
+          amount: number;
+          category: string;
+        }) => e.category === selectedCategory,
+      )
     : expenses;
 
   return (
@@ -27,7 +39,18 @@ const App = () => {
       />
       <ExpenseList
         expenses={visibleExpenses}
-        onDelete={(id) => setExpenses(expenses.filter((e) => e.id !== id))}
+        onDelete={(id: number) =>
+          setExpenses(
+            expenses.filter(
+              (e: {
+                id: number;
+                description: string;
+                amount: number;
+                category: string;
+              }) => e.id !== id,
+            ),
+          )
+        }
       />
     </>
   );
