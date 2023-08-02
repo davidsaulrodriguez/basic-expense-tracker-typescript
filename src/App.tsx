@@ -1,20 +1,17 @@
 import ExpenseList from "./components/expense-tracker/components/ExpenseList.tsx";
 import { useState } from "react";
 import ExpenseFilter from "./components/expense-tracker/components/ExpenseFilter.tsx";
+import ExpenseForm from "./components/expense-tracker/components/ExpenseForm.tsx";
 
+interface Expenses {
+  id: number;
+  description: string;
+  amount: number;
+  category: string;
+}
 const App = () => {
-  const [expenses, setExpenses] = useState([
-    { id: 1, description: "aaa", amount: 30, category: "Books" },
-    { id: 2, description: "bbb", amount: 8, category: "Food" },
-    { id: 3, description: "ccc", amount: 22, category: "Utilities" },
-    { id: 4, description: "ddd", amount: 17, category: "Entertainment" },
-  ]);
-
-  if (expenses.length === 0) {
-    return <p>No expenses</p>;
-  }
-
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [expenses, setExpenses] = useState<Expenses[]>([]);
 
   const visibleExpenses: {
     id: number;
@@ -34,9 +31,19 @@ const App = () => {
 
   return (
     <>
-      <ExpenseFilter
-        onSelectCategory={(category) => setSelectedCategory(category)}
-      />
+      <h1 className="mb-5">Expense Tracker</h1>
+      <div className="mb-5">
+        <ExpenseForm
+          onSubmit={(expense) =>
+            setExpenses([...expenses, { ...expense, id: expenses.length + 1 }])
+          }
+        />
+      </div>
+      <div className="mb-5">
+        <ExpenseFilter
+          onSelectCategory={(category) => setSelectedCategory(category)}
+        />
+      </div>
       <ExpenseList
         expenses={visibleExpenses}
         onDelete={(id: number) =>
