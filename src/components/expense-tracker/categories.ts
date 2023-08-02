@@ -1,3 +1,8 @@
-const categories = ["Books", "Food", "Utilities", "Entertainment"];
+const categories: readonly [string, string, string, string] = [
+  "Books",
+  "Food",
+  "Utilities",
+  "Entertainment",
+];
 
 export default categories;
